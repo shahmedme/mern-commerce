@@ -8,7 +8,7 @@ const userSchema = new Schema({
 	username: { type: String, required: true },
 	email: { type: String, required: true },
 	password: { type: String, required: true },
-	role: { type: String, required: true },
+	role: { type: String, default: "user" },
 	timestamp: { type: Date, default: Date.now },
 });
 
@@ -21,6 +21,10 @@ userSchema.path("email").validate(async (email: String) => {
 	let emailCount = await mongoose.models.User.countDocuments({ email });
 	return !emailCount;
 }, "Email already exist");
+
+userSchema.path("role").validate(async (role: String) => {
+	if (role === "superadmin") return false;
+}, "Can't be registered as superadmin. Please ask another superadmin to create account for you");
 
 userSchema.pre("save", async function (this: any, next: any) {
 	try {

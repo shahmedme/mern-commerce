@@ -14,7 +14,6 @@ export default class AccountController {
 
 		newUser.save((err, user) => {
 			if (err) res.status(400).send(err);
-
 			res.status(200).send(user);
 		});
 	}
