@@ -5,7 +5,7 @@ export default function index() {
 		<>
 			<div className="wrapper">
 				<div className="header">
-					<h1>MERN Commerce</h1>
+					<h1 className="title">MERN Commerce</h1>
 					<p>
 						Made with <i className="fas fa-heart"></i> by&nbsp;
 						<a href="https://github.com/shakilahmmeed" target="_blank">
@@ -73,6 +73,10 @@ export default function index() {
 			<style jsx>{`
 				.header {
 					text-align: center;
+				}
+
+				.title {
+					margin-bottom: 10px;
 				}
 
 				main {

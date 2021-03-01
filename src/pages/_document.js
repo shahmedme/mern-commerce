@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import Ribon from "../components/Ribon";
 
 export default class MyDocument extends Document {
 	static async getInitialProps(ctx) {
@@ -22,8 +23,14 @@ export default class MyDocument extends Document {
 					/>
 				</Head>
 				<body>
+					<Ribon />
 					<Main />
 					<NextScript />
+					<style>{`
+						body {
+							overflow-x: hidden;
+						}
+					`}</style>
 				</body>
 			</Html>
 		);
