@@ -61,7 +61,13 @@ export default class OrderController {
 		res.send({ msg: "updated orders are: " });
 	}
 
-	public deleteOrder(req: Request, res: Response): void {
-		res.send({ msg: "orders are deleted" });
+	public async deleteOrder(req: Request, res: Response) {
+		let orderId = req.body._id;
+		let del = await Order.deleteOne({ _id: orderId }).exec();
+		if (del.deletedCount > 0) {
+			res.send({ msg: "Order deleted successfully" });
+		} else {
+			res.status(500).send({ msg: "something error" });
+		}
 	}
 }

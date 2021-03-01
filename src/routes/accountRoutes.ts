@@ -23,10 +23,10 @@ export default class UserRoutes {
 			authorize("superadmin", "admin"),
 			this.accountController.updateUser
 		);
-		// this.router.delete(
-		// 	"/users",
-		// 	authorize("superadmin", "admin"),
-		// 	this.accountController.deleteUser
-		// );
+		this.router.delete(
+			"/users",
+			authorize("superadmin", "admin"),
+			this.accountController.deleteUser
+		);
 	}
 }

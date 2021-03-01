@@ -27,6 +27,10 @@ export default class OrderRoutes {
 			this.orderController.createOrder
 		);
 		this.router.put("/orders", this.orderController.updateOrder);
-		this.router.delete("/orders", this.orderController.deleteOrder);
+		this.router.delete(
+			"/orders",
+			authorize("superadmin", "admin"),
+			this.orderController.deleteOrder
+		);
 	}
 }

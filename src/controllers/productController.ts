@@ -33,14 +33,13 @@ export default class ProductController {
 		);
 	}
 
-	// public deleteProduct(req: Request, res: Response): void {
-	// 	let productId = req.body._id;
-
-	// 	Product.findOneAndDelete({ _id: productId }, (err, product) => {
-	// 		if (err) {
-	// 			res.send(err);
-	// 		}
-	// 		res.send(product);
-	// 	});
-	// }
+	public async deleteProduct(req: Request, res: Response) {
+		let productId = req.body._id;
+		let del = await Product.deleteOne({ _id: productId }).exec();
+		if (del.deletedCount > 0) {
+			res.send({ msg: "Product deleted successfully" });
+		} else {
+			res.status(500).send({ msg: "something error" });
+		}
+	}
 }

@@ -75,12 +75,13 @@ export default class AccountController {
 		);
 	}
 
-	// public deleteuser(req: Request, res: Response): void {
-	// 	let userId = req.body._id;
-
-	// 	User.findOneAndDelete({ _id: userId }, (err, user) => {
-	// 		if (err) res.send(err);
-	// 		res.send(user);
-	// 	});
-	// }
+	public async deleteUser(req: Request, res: Response) {
+		let userId = req.body._id;
+		let del = await User.deleteOne({ _id: userId }).exec();
+		if (del.deletedCount > 0) {
+			res.send({ msg: "User deleted successfully" });
+		} else {
+			res.status(500).send({ msg: "something error" });
+		}
+	}
 }
