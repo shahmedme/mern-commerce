@@ -10,6 +10,7 @@ export default class UserRoutes {
 	}
 
 	private initRoutes(): void {
-		this.router.post("/users", this.accountController.register);
+		this.router.post("/register", this.accountController.register);
+		this.router.post("/login", this.accountController.login);
 	}
 }

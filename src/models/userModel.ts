@@ -24,7 +24,7 @@ userSchema.path("email").validate(async (email: String) => {
 
 userSchema.pre("save", async function (this: any, next: any) {
 	try {
-		let salt = await bcrypt.getSalt(10);
+		let salt = await bcrypt.genSalt(10);
 		this.password = await bcrypt.hash(this.password, salt);
 		next();
 	} catch (err) {
