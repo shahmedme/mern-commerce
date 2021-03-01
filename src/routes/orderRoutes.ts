@@ -36,5 +36,11 @@ export default class OrderRoutes {
 			authorize("superadmin", "admin"),
 			this.orderController.deleteOrder
 		);
+
+		this.router.get(
+			"/orders/report",
+			authorize("superadmin"),
+			this.orderController.generateReport
+		);
 	}
 }

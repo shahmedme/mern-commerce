@@ -84,4 +84,14 @@ export default class OrderController {
 			res.status(500).send({ msg: "something error" });
 		}
 	}
+
+	public async generateReport(req: Request, res: Response) {
+		let totalOrders = await Order.aggregate([
+			{ $match: {} },
+			{ $group: { _id: "$status", count: { $sum: 1 } } },
+			{ $project: { status: "$_id", count: 1, _id: 0 } },
+		]);
+
+		res.send(totalOrders);
+	}
 }
