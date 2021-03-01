@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import axios from "axios";
 import Product from "../models/productModel";
 
 export default class ProductController {
@@ -40,6 +41,18 @@ export default class ProductController {
 			res.send({ msg: "Product deleted successfully" });
 		} else {
 			res.status(500).send({ msg: "something error" });
+		}
+	}
+
+	public async generateProducts(req: Request, res: Response) {
+		try {
+			let productResponse = await axios.get(
+				"https://fakestoreapi.com/products"
+			);
+			let products = await Product.insertMany(productResponse.data);
+			res.send(products);
+		} catch (err) {
+			res.send(err);
 		}
 	}
 }

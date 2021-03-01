@@ -27,5 +27,10 @@ export default class ProductRoutes {
 			authorize("superadmin", "admin"),
 			this.productController.deleteProduct
 		);
+		this.router.get(
+			"/products/generate",
+			authorize("superadmin"),
+			this.productController.generateProducts
+		);
 	}
 }
