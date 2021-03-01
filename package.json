@@ -17,7 +17,8 @@
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
 		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^5.11.17"
+		"mongoose": "^5.11.17",
+		"mongoose-sequence": "^5.3.1"
 	},
 	"devDependencies": {
 		"@types/express": "^4.17.11",

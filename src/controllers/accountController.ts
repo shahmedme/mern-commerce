@@ -51,4 +51,36 @@ export default class AccountController {
 			);
 		});
 	}
+
+	public getUsers(req: Request, res: Response): void {
+		let users = User.find({}, (err, users) => {
+			if (err) res.send(err);
+
+			res.send(users);
+		});
+	}
+
+	public updateUser(req: Request, res: Response): void {
+		let userId = req.body._id;
+		let updatedUser = req.body;
+
+		User.findOneAndUpdate(
+			{ _id: userId },
+			updatedUser,
+			{ upsert: true, new: true },
+			(err, user) => {
+				if (err) res.send(err);
+				res.send(user);
+			}
+		);
+	}
+
+	// public deleteuser(req: Request, res: Response): void {
+	// 	let userId = req.body._id;
+
+	// 	User.findOneAndDelete({ _id: userId }, (err, user) => {
+	// 		if (err) res.send(err);
+	// 		res.send(user);
+	// 	});
+	// }
 }

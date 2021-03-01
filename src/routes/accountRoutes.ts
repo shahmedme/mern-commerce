@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { authorize } from "../middlewares/authMiddleware";
 import AccountController from "../controllers/accountController";
 
 export default class UserRoutes {
@@ -12,5 +13,20 @@ export default class UserRoutes {
 	private initRoutes(): void {
 		this.router.post("/register", this.accountController.register);
 		this.router.post("/login", this.accountController.login);
+		this.router.get(
+			"/users",
+			authorize("superadmin", "admin"),
+			this.accountController.getUsers
+		);
+		this.router.put(
+			"/users",
+			authorize("superadmin", "admin"),
+			this.accountController.updateUser
+		);
+		// this.router.delete(
+		// 	"/users",
+		// 	authorize("superadmin", "admin"),
+		// 	this.accountController.deleteUser
+		// );
 	}
 }

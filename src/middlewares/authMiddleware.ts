@@ -12,7 +12,7 @@ export async function authenticate(req: Request, res: Response, next: any) {
 			if (err) {
 				req.body.user = null;
 			} else {
-				req.body.user = authData;
+				req.body.user = authData.user;
 			}
 		});
 	}
@@ -23,7 +23,7 @@ export function authorize(...permittedRoles: any) {
 	return (req: Request, res: Response, next: any) => {
 		const { user } = req.body;
 
-		if (user && permittedRoles.includes(user.user.role)) {
+		if (user && permittedRoles.includes(user.role)) {
 			next();
 		} else {
 			res.status(400).send({ msg: "Method Not Allowed" });

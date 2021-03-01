@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import ProductDoc from "../interfaces/productInterface";
 
 const productSchema = new Schema({
 	title: { type: String, required: true },
@@ -7,4 +8,4 @@ const productSchema = new Schema({
 	createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Product", productSchema);
+export default mongoose.model<ProductDoc>("Product", productSchema);
