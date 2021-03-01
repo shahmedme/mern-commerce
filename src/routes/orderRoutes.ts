@@ -26,7 +26,11 @@ export default class OrderRoutes {
 			authorize("superadmin", "admin", "user"),
 			this.orderController.createOrder
 		);
-		this.router.put("/orders", this.orderController.updateOrder);
+		this.router.put(
+			"/orders",
+			authorize("superadmin", "admin"),
+			this.orderController.updateOrder
+		);
 		this.router.delete(
 			"/orders",
 			authorize("superadmin", "admin"),

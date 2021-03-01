@@ -57,8 +57,22 @@ export default class OrderController {
 		res.send(orderInfo);
 	}
 
-	public updateOrder(req: Request, res: Response): void {
-		res.send({ msg: "updated orders are: " });
+	public async updateOrder(req: Request, res: Response) {
+		let statusArr = ["accepted", "delivered", "rejected"];
+
+		if (!statusArr.includes(req.body.status)) {
+			req.body.status = "pending";
+		}
+
+		Order.findByIdAndUpdate(
+			req.body._id,
+			req.body,
+			{ new: true },
+			(err, order) => {
+				if (err) res.send(err);
+				res.send(order);
+			}
+		);
 	}
 
 	public async deleteOrder(req: Request, res: Response) {
