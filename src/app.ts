@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response } from "express";
 import mongoose from "mongoose";
 
 class App {
@@ -32,7 +32,7 @@ class App {
 
 	private initRoutes(appRoutes: any): void {
 		appRoutes.forEach((appRoutes: any) => {
-			this.app.use("/", appRoutes.router);
+			this.app.use("/api", appRoutes.router);
 		});
 	}
 
