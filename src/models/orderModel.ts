@@ -20,7 +20,7 @@ const orderSchema = new Schema({
 	customer: { type: Schema.Types.ObjectId, ref: "User", required: true },
 	shippingAddress: { type: String, required: true },
 	orderEmail: { type: String, required: true },
-	status: { type: String, default: "pending" },
+	status: { type: String, default: "pending", index: true },
 	timestamp: { type: Date, default: Date.now },
 });
 
