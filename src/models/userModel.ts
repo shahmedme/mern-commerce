@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import UserDoc from "../interfaces/userDoc";
 
 const bcrypt = require("bcrypt");
 
@@ -36,4 +37,4 @@ userSchema.pre("save", async function (this: any, next: any) {
 	}
 });
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model<UserDoc>("User", userSchema);

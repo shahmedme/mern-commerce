@@ -3,44 +3,54 @@ import axios from "axios";
 import Product from "../models/productModel";
 
 export default class ProductController {
-	public createProduct(req: Request, res: Response): void {
+	public async createProduct(req: Request, res: Response) {
 		const newProduct = new Product(req.body);
 
-		newProduct.save((err, product) => {
-			if (err) res.send(err);
+		try {
+			let product = await newProduct.save();
 			res.send(product);
-		});
+		} catch (err) {
+			res.send(err);
+		}
 	}
 
-	public getProducts(req: Request, res: Response): void {
-		Product.find({}, (err, products) => {
-			if (err) res.send(err);
+	public async getProducts(req: Request, res: Response) {
+		try {
+			let products = await Product.find();
 			res.send(products);
-		});
+		} catch (err) {
+			res.send(err);
+		}
 	}
 
-	public updateProduct(req: Request, res: Response): void {
+	public async updateProduct(req: Request, res: Response) {
 		let productId = req.body._id;
 		let updatedProduct = req.body;
 
-		Product.findOneAndUpdate(
-			{ _id: productId },
-			updatedProduct,
-			{ upsert: true, new: true },
-			(err, product) => {
-				if (err) res.send(err);
-				res.send(product);
-			}
-		);
+		try {
+			let product = await Product.findOneAndUpdate(
+				{ _id: productId },
+				updatedProduct,
+				{ upsert: true, new: true }
+			);
+			res.send(product);
+		} catch (err) {
+			res.send(err);
+		}
 	}
 
 	public async deleteProduct(req: Request, res: Response) {
 		let productId = req.body._id;
-		let del = await Product.deleteOne({ _id: productId }).exec();
-		if (del.deletedCount > 0) {
-			res.send({ msg: "Product deleted successfully" });
-		} else {
-			res.status(500).send({ msg: "something error" });
+
+		try {
+			let del = await Product.deleteOne({ _id: productId }).exec();
+			if (del.deletedCount > 0) {
+				res.send({ msg: "Product deleted successfully" });
+			} else {
+				res.status(500).send({ msg: "something error" });
+			}
+		} catch (err) {
+			res.send(err);
 		}
 	}
 

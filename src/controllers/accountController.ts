@@ -5,82 +5,92 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 export default class AccountController {
-	public register(req: Request, res: Response): void {
+	public async register(req: Request, res: Response) {
 		const newUser = new User(req.body);
 
 		if (!req.body.username || !req.body.password) {
 			res.status(400).send({ msg: "Please provide username and password" });
 		}
 
-		newUser.save((err, user) => {
-			if (err) res.status(400).send(err);
-			res.status(200).send(user);
-		});
+		try {
+			let user = await newUser.save();
+			res.send(user);
+		} catch (err) {
+			res.send(err);
+		}
 	}
 
-	public login(req: Request, res: Response): void {
+	public async login(req: Request, res: Response) {
 		const { username } = req.body;
 
-		User.findOne({ username }, (err: any, user: any) => {
-			if (err) {
-				res.send(err);
-			} else if (user === null) {
+		try {
+			let user = await User.findOne({ username });
+
+			if (user === null) {
 				res.status(400).send({ msg: "User not found" });
-			}
-
-			bcrypt.compare(
-				req.body.password,
-				user.password,
-				(err: any, result: any) => {
-					if (err) {
-						res.send(err);
-					} else if (result) {
-						jwt.sign(
-							{ user },
-							process.env.SECRET_KEY,
-							(err: any, token: any) => {
-								if (err) res.send(err);
-								res.send({ token });
-							}
-						);
-					} else {
-						res.status(400).send({ msg: "Invalid Password" });
+			} else {
+				bcrypt.compare(
+					req.body.password,
+					user.password,
+					(err: any, result: any) => {
+						if (err) {
+							res.send(err);
+						} else if (result) {
+							jwt.sign(
+								{ user },
+								process.env.SECRET_KEY,
+								(err: any, token: any) => {
+									if (err) res.send(err);
+									res.send({ token });
+								}
+							);
+						} else {
+							res.status(400).send({ msg: "Invalid Password" });
+						}
 					}
-				}
-			);
-		});
+				);
+			}
+		} catch (err) {
+			res.send(err);
+		}
 	}
 
-	public getUsers(req: Request, res: Response): void {
-		let users = User.find({}, (err, users) => {
-			if (err) res.send(err);
-
+	public async getUsers(req: Request, res: Response) {
+		try {
+			let users = await User.find().exec();
 			res.send(users);
-		});
+		} catch (err) {
+			res.send(err);
+		}
 	}
 
-	public updateUser(req: Request, res: Response): void {
+	public async updateUser(req: Request, res: Response) {
 		let userId = req.body._id;
 		let updatedUser = req.body;
 
-		User.findOneAndUpdate(
-			{ _id: userId },
-			updatedUser,
-			{ upsert: true, new: true },
-			(err, user) => {
-				if (err) res.send(err);
-				res.send(user);
-			}
-		);
+		try {
+			let user = await User.findOneAndUpdate({ _id: userId }, updatedUser, {
+				upsert: true,
+				new: true,
+			}).exec();
+			res.send(user);
+		} catch (err) {
+			res.send(err);
+		}
 	}
 
 	public async deleteUser(req: Request, res: Response) {
 		let userId = req.body._id;
-		let del = await User.deleteOne({ _id: userId }).exec();
-		if (del.deletedCount > 0) {
-			res.send({ msg: "User deleted successfully" });
-		} else {
-			res.status(500).send({ msg: "something error" });
+
+		try {
+			let del = await User.deleteOne({ _id: userId }).exec();
+			if (del.deletedCount > 0) {
+				res.send({ msg: "User deleted successfully" });
+			} else {
+				res.status(500).send({ msg: "something error" });
+			}
+		} catch (err) {
+			res.send(err);
 		}
 	}
 }
