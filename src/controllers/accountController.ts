@@ -16,7 +16,7 @@ export default class AccountController {
 			let user = await newUser.save();
 			res.send(user);
 		} catch (err) {
-			res.send(err);
+			res.status(400).send(err);
 		}
 	}
 
@@ -61,6 +61,16 @@ export default class AccountController {
 			res.send(users);
 		} catch (err) {
 			res.send(err);
+		}
+	}
+
+	public async getUser(req: Request, res: Response) {
+		let { user } = req.body;
+
+		if (user) {
+			res.send(user);
+		} else {
+			res.status(400).send({ msg: "User not found" });
 		}
 	}
 

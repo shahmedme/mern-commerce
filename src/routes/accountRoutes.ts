@@ -13,6 +13,7 @@ export default class UserRoutes {
 	private initRoutes(): void {
 		this.router.post("/register", this.accountController.register);
 		this.router.post("/login", this.accountController.login);
+		this.router.get("/user", this.accountController.getUser);
 		this.router.get(
 			"/users",
 			authorize("superadmin", "admin"),
