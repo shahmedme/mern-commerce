@@ -23,6 +23,15 @@ export default class ProductController {
 		}
 	}
 
+	public async getSingleProduct(req: Request, res: Response) {
+		try {
+			let product = await Product.findOne({ slug: req.query.slug });
+			res.send(product);
+		} catch (err) {
+			res.send(err);
+		}
+	}
+
 	public async updateProduct(req: Request, res: Response) {
 		let productId = req.body._id;
 		let updatedProduct = req.body;

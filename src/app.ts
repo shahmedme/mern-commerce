@@ -1,6 +1,14 @@
 import express, { Application, Request, Response } from "express";
+import User from "./models/userModel";
+import Product from "./models/productModel";
+import Order from "./models/orderModel";
 import mongoose from "mongoose";
 
+const AdminBro = require("admin-bro");
+const AdminBroExpress = require("@admin-bro/express");
+const AdminBroMongoose = require("@admin-bro/mongoose");
+
+AdminBro.registerAdapter(AdminBroMongoose);
 class App {
 	public app: Application;
 	public port: number;
@@ -14,9 +22,20 @@ class App {
 		this.app = express();
 		this.port = appInit.port;
 
-		this.initMiddlewares(appInit.middlewares);
 		this.connectDB(appInit.mongoURL);
+		this.setupAdmin();
+		this.initMiddlewares(appInit.middlewares);
 		this.initRoutes(appInit.routes);
+	}
+
+	private setupAdmin() {
+		const adminBro = new AdminBro({
+			rootPath: "/admin",
+			resources: [Product, Order, User],
+		});
+
+		const router = AdminBroExpress.buildRouter(adminBro);
+		this.app.use(adminBro.options.rootPath, router);
 	}
 
 	private initMiddlewares(middlewares: any) {
@@ -25,8 +44,8 @@ class App {
 		});
 	}
 
-	private connectDB(mongoURL: string): void {
-		mongoose.connect(mongoURL);
+	private async connectDB(mongoURL: string) {
+		await mongoose.connect(mongoURL);
 		console.log("Database connected successfully");
 	}
 
