@@ -1,4 +1,5 @@
 import bodyParser from "body-parser";
+import cors from "cors";
 import App from "./app";
 import appRoutes from "./routes";
 import { authenticate } from "./middlewares/authMiddleware";
@@ -18,6 +19,7 @@ nxt.prepare().then(() => {
 		middlewares: [
 			bodyParser.json(),
 			bodyParser.urlencoded({ extended: false }),
+			cors(),
 			loggerMiddleware,
 			authenticate,
 		],
