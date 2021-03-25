@@ -13,6 +13,7 @@ export default class ProductRoutes {
 	private initRoutes() {
 		this.router.get("/products", this.productController.getProducts);
 		this.router.get("/product", this.productController.getSingleProduct);
+		this.router.get("/product/search", this.productController.searchProducts);
 		this.router.post(
 			"/products",
 			authorize("superadmin", "admin"),

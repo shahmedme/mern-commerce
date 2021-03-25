@@ -65,4 +65,16 @@ export default class ProductController {
 			res.send(err);
 		}
 	}
+
+	public async searchProducts(req: Request, res: Response) {
+		let query = req.query.q;
+		var regex = new RegExp(query as string, "i");
+
+		try {
+			let results = await Product.find({ title: regex });
+			res.send(results);
+		} catch (err) {
+			res.send(err);
+		}
+	}
 }
