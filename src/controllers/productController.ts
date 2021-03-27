@@ -23,6 +23,15 @@ export default class ProductController {
 		}
 	}
 
+	public async getSingleProduct(req: Request, res: Response) {
+		try {
+			let product = await Product.findOne({ slug: req.query.slug });
+			res.send(product);
+		} catch (err) {
+			res.send(err);
+		}
+	}
+
 	public async updateProduct(req: Request, res: Response) {
 		let productId = req.body._id;
 		let updatedProduct = req.body;
@@ -73,6 +82,16 @@ export default class ProductController {
 		try {
 			let results = await Product.find({ title: regex });
 			res.send(results);
+		} catch (err) {
+			res.send(err);
+		}
+	}
+
+	public async getProductByCategory(req: Request, res: Response) {
+		try {
+			console.log(req.params.categorySlug);
+			let products = await Product.find({ category: req.params.categorySlug });
+			res.send(products);
 		} catch (err) {
 			res.send(err);
 		}
