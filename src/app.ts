@@ -1,6 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import User from "./models/userModel";
-import Product from "./models/productModel";
+import Product, { Category } from "./models/productModel";
 import Order from "./models/orderModel";
 import mongoose from "mongoose";
 
@@ -31,7 +31,7 @@ class App {
 	private setupAdmin() {
 		const adminBro = new AdminBro({
 			rootPath: "/admin",
-			resources: [Product, Order, User],
+			resources: [Product, Order, User, Category],
 		});
 
 		const router = AdminBroExpress.buildRouter(adminBro);
