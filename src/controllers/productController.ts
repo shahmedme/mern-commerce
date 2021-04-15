@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import axios from "axios";
-import Product from "../models/productModel";
+import Product, { Category } from "../models/productModel";
 
 export default class ProductController {
 	public async createProduct(req: Request, res: Response) {
@@ -89,9 +89,28 @@ export default class ProductController {
 
 	public async getProductByCategory(req: Request, res: Response) {
 		try {
-			console.log(req.params.categorySlug);
 			let products = await Product.find({ category: req.params.categorySlug });
 			res.send(products);
+		} catch (err) {
+			res.send(err);
+		}
+	}
+
+	public async getCategories(req: Request, res: Response) {
+		try {
+			let categories = await Category.find();
+			res.send(categories);
+		} catch (err) {
+			res.send(err);
+		}
+	}
+
+	public async addCategory(req: Request, res: Response) {
+		const newCategory = new Category(req.body);
+
+		try {
+			let category = await newCategory.save();
+			res.send(category);
 		} catch (err) {
 			res.send(err);
 		}
