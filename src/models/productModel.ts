@@ -21,3 +21,17 @@ productSchema.pre("validate", async function (this: any, next: any) {
 });
 
 export default mongoose.model<ProductDoc>("Product", productSchema);
+
+const categorySchema = new Schema({
+	title: { type: String, required: true, index: true },
+	slug: { type: String, required: true },
+});
+
+categorySchema.pre("validate", async function (this: any, next: any) {
+	if (this.title) {
+		this.slug = slugify(this.title, { lower: true, strict: true });
+	}
+	next();
+});
+
+export const Category = mongoose.model("Category", categorySchema);

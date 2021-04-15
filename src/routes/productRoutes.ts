@@ -15,6 +15,14 @@ export default class ProductRoutes {
 		this.router.get("/product", this.productController.getSingleProduct);
 		this.router.get("/product/search", this.productController.searchProducts);
 		this.router.get(
+			"/products/categories",
+			this.productController.getCategories
+		);
+		this.router.post(
+			"/products/categories",
+			this.productController.addCategory
+		);
+		this.router.get(
 			"/category/:categorySlug",
 			this.productController.getProductByCategory
 		);
