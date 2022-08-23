@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 
 class App {
 	public app: Application;
-	public port: number;
+	public port: number | string;
 
 	constructor(appInit: {
-		port: number;
+		port: number | string;
 		middlewares: any;
 		mongoURL: string;
 		routes: any;

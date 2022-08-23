@@ -15,7 +15,7 @@ const handle = nxt.getRequestHandler();
 
 nxt.prepare().then(() => {
 	const app = new App({
-		port: 5000,
+		port: process.env.PORT || 5000,
 		middlewares: [
 			bodyParser.json(),
 			bodyParser.urlencoded({ extended: false }),
