@@ -89,8 +89,16 @@ export default class ProductController {
 
 	public async getProductByCategory(req: Request, res: Response) {
 		try {
-			let products = await Product.find({ category: req.params.categorySlug });
-			res.send(products);
+			if (req.params.categorySlug === "all") {
+				let products = await Product.find();
+				res.send(products);
+			} else {
+				let category = await Category.findOne({
+					slug: req.params.categorySlug,
+				});
+				let products = await Product.find({ category: category?._id });
+				res.send(products);
+			}
 		} catch (err) {
 			res.send(err);
 		}
