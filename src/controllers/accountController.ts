@@ -94,7 +94,9 @@ export default class AccountController {
 
 		try {
 			let del = await User.deleteOne({ _id: userId }).exec();
-			if (del.deletedCount > 0) {
+
+			// @ts-ignore
+			if (del && del.deletedCount > 0) {
 				res.send({ msg: "User deleted successfully" });
 			} else {
 				res.status(500).send({ msg: "something error" });
