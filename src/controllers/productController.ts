@@ -53,6 +53,7 @@ export default class ProductController {
 
 		try {
 			let del = await Product.deleteOne({ _id: productId }).exec();
+			// @ts-ignore
 			if (del.deletedCount > 0) {
 				res.send({ msg: "Product deleted successfully" });
 			} else {
