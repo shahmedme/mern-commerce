@@ -1,7 +1,6 @@
-import React, { Component, ReactElement } from "react";
+import React, { Component, Fragment, ReactElement } from "react";
 import indexStyles from "./index.module.css";
 import Ribbon from "components/Ribbon";
-import Link from "next/link";
 import { ApiClient } from "admin-bro";
 
 const apiEndpoints: Record<string, { title: ReactElement, url: string }[]> = {
@@ -141,9 +140,6 @@ const apiEndpoints: Record<string, { title: ReactElement, url: string }[]> = {
 	],
 };
 
-console.log(apiEndpoints);
-
-
 export default function index() {
 
 	return (
@@ -163,17 +159,17 @@ export default function index() {
 					<b>Endpoints:</b>
 					<ul className={indexStyles.endpoints}>
 						{
-							Object.keys(apiEndpoints).map(endpointKey => (
-								<>
-									{apiEndpoints[endpointKey].map(productAPI => (
-										<li>
-											{productAPI.title} - <Link href={productAPI.url} target="_blank">
+							Object.keys(apiEndpoints).map((endpointKey, index) => (
+								<Fragment key={index}>
+									{apiEndpoints[endpointKey].map((productAPI, index) => (
+										<li key={index}>
+											{productAPI.title} - <a href={productAPI.url} target="_blank">
 												<i className={`fas fa-external-link-alt`}></i>
-											</Link>
+											</a>
 										</li>
 									))}
 									<div className={indexStyles.separator}></div>
-								</>
+								</Fragment>
 							)
 							)
 						}
