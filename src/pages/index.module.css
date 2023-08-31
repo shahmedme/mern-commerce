@@ -1,0 +1,27 @@
+.header {
+    text-align: center;
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+.endpoints li {
+    margin: 5px 0px;
+}
+
+.endpoints code {
+    background: #cd3771;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.separator {
+    height: 10px;
+    width: 5px;
+}
+
+.fa_heart {
+    color: red;
+}

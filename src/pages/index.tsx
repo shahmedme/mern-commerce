@@ -1,13 +1,16 @@
 import React from "react";
+import indexStyles from "./index.module.css";
+import Ribbon from "components/Ribbon";
 
 export default function index() {
 	return (
 		<>
-			<div className="wrapper">
-				<div className="header">
-					<h1 className="title">MERN Commerce</h1>
+		<Ribbon/>
+			<div className={indexStyles.wrapper}>
+				<div className={indexStyles.header}>
+					<h1 className={indexStyles.title}>MERN Commerce</h1>
 					<p>
-						Made with <i className="fas fa-heart"></i> by&nbsp;
+						Made with <i className={`fas fa-heart ${indexStyles.fa_heart}`}></i> by&nbsp;
 						<a href="https://github.com/shakilahmmeed" target="_blank">
 							Shakil Ahmed
 						</a>
@@ -15,7 +18,7 @@ export default function index() {
 				</div>
 				<main>
 					<b>Endpoints:</b>
-					<ul className="endpoints">
+					<ul className={indexStyles.endpoints}>
 						<li>
 							GET <code>/api/products</code> get all products
 						</li>
@@ -32,7 +35,7 @@ export default function index() {
 							GET <code>/api/products/generate</code> Generate product from
 							third party API
 						</li>
-						<div className="separator"></div>
+						<div className={indexStyles.separator}></div>
 						<li>
 							GET <code>/api/orders</code> get all orders
 						</li>
@@ -51,7 +54,7 @@ export default function index() {
 						<li>
 							GET <code>/api/orders/report</code> generate summary report
 						</li>
-						<div className="separator"></div>
+						<div className={indexStyles.separator}></div>
 						<li>
 							POST <code>/api/register</code> create a new account
 						</li>
@@ -70,41 +73,6 @@ export default function index() {
 					</ul>
 				</main>
 			</div>
-			<style jsx>{`
-				.header {
-					text-align: center;
-				}
-
-				.title {
-					margin-bottom: 10px;
-				}
-
-				main {
-					width: 50%;
-					margin: 0px auto;
-					padding: 40px 0px;
-				}
-
-				.endpoints li {
-					margin: 5px 0px;
-				}
-
-				.endpoints code {
-					background: #cd3771;
-					color: white;
-					padding: 2px 5px;
-					border-radius: 5px;
-				}
-
-				.separator {
-					height: 10px;
-					width: 5px;
-				}
-
-				.fa-heart {
-					color: red;
-				}
-			`}</style>
 		</>
 	);
 }
