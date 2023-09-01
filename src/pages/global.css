@@ -1,0 +1,11 @@
+main {
+    width: 50%;
+    margin: 0px auto;
+    padding: 40px 0px;
+}
+
+body {
+    background: #f1f1f1;
+    font-family: "Rubik", sans-serif;
+    overflow-x: hidden;
+}
