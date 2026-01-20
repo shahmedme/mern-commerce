@@ -3,7 +3,7 @@ import indexStyles from "./index.module.css";
 import Ribbon from "components/Ribbon";
 import { ApiClient } from "admin-bro";
 
-const apiEndpoints: Record<string, { title: ReactElement, url: string }[]> = {
+const apiEndpoints: Record<string, { title: ReactElement; url: string }[]> = {
 	products: [
 		{
 			title: (
@@ -40,7 +40,8 @@ const apiEndpoints: Record<string, { title: ReactElement, url: string }[]> = {
 		{
 			title: (
 				<>
-					GET <code>/api/products/generate</code> Generate product from third party API
+					GET <code>/api/products/generate</code> Generate product from third
+					party API
 				</>
 			),
 			url: "/api/products/generate",
@@ -141,7 +142,6 @@ const apiEndpoints: Record<string, { title: ReactElement, url: string }[]> = {
 };
 
 export default function index() {
-
 	return (
 		<>
 			<Ribbon />
@@ -149,8 +149,9 @@ export default function index() {
 				<div className={indexStyles.header}>
 					<h1 className={indexStyles.title}>MERN Commerce</h1>
 					<p>
-						Made with <i className={`fas fa-heart ${indexStyles.fa_heart}`}></i> by&nbsp;
-						<a href="https://github.com/shakilahmmeed" target="_blank">
+						Made with <i className={`fas fa-heart ${indexStyles.fa_heart}`}></i>{" "}
+						by&nbsp;
+						<a href="https://github.com/shahmedme" target="_blank">
 							Shakil Ahmed
 						</a>
 					</p>
@@ -158,22 +159,19 @@ export default function index() {
 				<main>
 					<b>Endpoints:</b>
 					<ul className={indexStyles.endpoints}>
-						{
-							Object.keys(apiEndpoints).map((endpointKey, index) => (
-								<Fragment key={index}>
-									{apiEndpoints[endpointKey].map((productAPI, index) => (
-										<li key={index}>
-											{productAPI.title} - <a href={productAPI.url} target="_blank">
-												<i className={`fas fa-external-link-alt`}></i>
-											</a>
-										</li>
-									))}
-									<div className={indexStyles.separator}></div>
-								</Fragment>
-							)
-							)
-						}
-
+						{Object.keys(apiEndpoints).map((endpointKey, index) => (
+							<Fragment key={index}>
+								{apiEndpoints[endpointKey].map((productAPI, index) => (
+									<li key={index}>
+										{productAPI.title} -{" "}
+										<a href={productAPI.url} target="_blank">
+											<i className={`fas fa-external-link-alt`}></i>
+										</a>
+									</li>
+								))}
+								<div className={indexStyles.separator}></div>
+							</Fragment>
+						))}
 					</ul>
 				</main>
 			</div>
